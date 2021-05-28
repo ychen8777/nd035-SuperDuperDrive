@@ -1,7 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
 public class User {
-    private int userid;
+    private Integer userid;
     private String username;
     private String salt;
     private String password;
