@@ -25,7 +25,24 @@ public class SignupController {
 
     @PostMapping("/signup")
     public String signupUser(@ModelAttribute User user, Model model) {
-        
+        String signupError = null;
+
+        if (!userService.isUsernameAvailable(user.getUsername())) {
+            signupError = "Username " + user.getUsername() + " is not available. Please choose another username.";
+        }
+
+        if (signupError == null) {
+            int userid = userService.createUser(user);
+            if (userid < 0) {
+                signupError = "Action failed. Please try again later.";
+            }
+        }
+
+        if (signupError == null) {
+            model.addAttribute("signupSuccess", true);
+        } else {
+            model.addAttribute("signupError", signupError);
+        }
 
         return "signup";
     }
