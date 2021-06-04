@@ -33,10 +33,10 @@ public class HomeController {
 
     @PostMapping(value = "noteForm")
     public String addNote(@ModelAttribute("note") Note note, Model model){
-        Note newNote = new Note(null, note.getNoteTitle(), note.getNoteDescription(), note.getUserid());
+        Note newNote = new Note(null, note.getNoteTitle(), note.getNoteDescription(), getUserid());
         noteService.addNote(newNote);
 
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     public Integer getUserid(){
