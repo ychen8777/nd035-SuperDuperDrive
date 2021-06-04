@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+
 @Controller
 public class HomeController {
 
@@ -27,6 +29,9 @@ public class HomeController {
         //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         //User user = (User) auth.getPrincipal();
         //System.out.println("userid: " + user.getUserid());
+
+        ArrayList<Note> noteList = (ArrayList<Note>) noteService.getNoteList(getUserid());
+        model.addAttribute("noteList", noteList);
 
         return "home";
     }
