@@ -44,17 +44,21 @@ public class HomeController {
         return "redirect:/result";
     }
 
+    @GetMapping(value = "/notes/edit/{id}")
+    public String showUpdateForm(@PathVariable("id") Integer noteid, @ModelAttribute("note") Note note, Model model) {
+        Note theNote = noteService.getNote(noteid);
+        model.addAttribute("theNote", theNote);
+
+        return "home";
+    }
+
+
     @GetMapping(value = "/notes/delete/{id}")
     public String deleteNote(@PathVariable("id") Integer noteid, @ModelAttribute("note") Note note, Model model) {
         noteService.deleteNote(noteid);
 
         return "redirect:/result";
     }
-
-
-
-
-
 
 
 
