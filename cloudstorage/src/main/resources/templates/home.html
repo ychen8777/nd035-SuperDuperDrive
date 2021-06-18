@@ -128,8 +128,8 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="#" method="PUT" th:object="${note}" th:action="@{'/notes/update/{id}' (id=${note.noteid})}">
-                                            <input type="hidden" name="noteId" id="edit-note-id" th:field="*{noteid}">
+                                        <form action="#" method="POST" th:object="${note}" th:action="@{/notes/update}">
+                                            <input type="hidden" name="noteId" id="edit-note-id" th:field="${note.noteid}">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">Title</label>
                                                 <input type="text" name= "noteTitle" class="form-control" id="edit-note-title" maxlength="20" required th:field="*{noteTitle}">
