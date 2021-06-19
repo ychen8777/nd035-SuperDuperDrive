@@ -31,6 +31,11 @@ public class AccessTests {
         driver.quit();
     }
 
+    @BeforeEach
+    public void beforeEach() throws InterruptedException {
+        Thread.sleep(2000);
+    }
+
     @Test
     public void getLoginPage() {
         driver.get("http://localhost:" + port + "/login");
@@ -68,9 +73,9 @@ public class AccessTests {
         getSignupPageBeforeLogin();
         this.signupPage = new SignupPage(driver);
         String testFirstName = "Selenium";
-        String testLastName = "Test1";
-        String testUsername = "SeleniumTest1";
-        String testPassword = "SeleniumTest1";
+        String testLastName = "Test2";
+        String testUsername = "SeleniumTest2";
+        String testPassword = "SeleniumTest2";
 
         // successful sign up
         signupPage.signupUser(testFirstName, testLastName, testUsername, testPassword);
