@@ -2,7 +2,9 @@ package com.udacity.jwdnd.course1.cloudstorage;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -16,6 +18,7 @@ public class AccessTests {
     private int port;
 
     private static WebDriver driver;
+    private SignupPage signupPage;
 
     @BeforeAll
     public static void beforeAll() {
@@ -57,6 +60,28 @@ public class AccessTests {
         String actualUrl= driver.getCurrentUrl();
         String expectedUrl= "http://localhost:" + port + "/login";
         Assertions.assertEquals(expectedUrl,actualUrl);
+    }
+
+    // sign up user
+    @Test
+    public void signupUser() {
+        getSignupPageBeforeLogin();
+        this.signupPage = new SignupPage(driver);
+        String testFirstName = "Selenium";
+        String testLastName = "Test1";
+        String testUsername = "SeleniumTest1";
+        String testPassword = "SeleniumTest1";
+
+        // successful sign up
+        signupPage.signupUser(testFirstName, testLastName, testUsername, testPassword);
+        WebElement returnMsg= driver.findElement(By.id("signup-success"));
+        Assertions.assertNotNull(returnMsg, "success message not found");
+
+        // unsuccessful sign up, username not available
+        signupPage.signupUser(testFirstName, testLastName, testUsername, testPassword);
+        returnMsg= driver.findElement(By.id("signup-error"));
+        Assertions.assertNotNull(returnMsg, "error message not found");
+
     }
 
 }

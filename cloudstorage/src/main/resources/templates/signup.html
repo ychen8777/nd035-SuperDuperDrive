@@ -16,10 +16,10 @@
 
             <h1 class="display-5">Sign Up</h1>
             <form action="#" method="POST" th:action="@{/signup}" th:object="${user}">
-                <div th:if="${signupSuccess}" class="alert alert-dark">
+                <div th:if="${signupSuccess}" class="alert alert-dark" id="signup-success">
                     You successfully signed up! Please continue to the <a>login</a> page.
                 </div>
-                <div th:if="${signupError}" class="alert alert-danger">
+                <div th:if="${signupError}" class="alert alert-danger" id="signup-error">
                     <span th:text="${signupError}"></span>
                 </div>
                 <div class="form-row">
@@ -42,7 +42,7 @@
                         <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Enter Password" maxlength="20" required>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary" id="signUpButton">Sign Up</button>
+                <button type="submit" class="btn btn-primary" id="signupButton">Sign Up</button>
             </form>
         </div>
     </body>
