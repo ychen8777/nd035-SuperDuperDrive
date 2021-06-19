@@ -38,10 +38,15 @@ public class HomeController {
 
     @PostMapping(value = "addNote")
     public String addNote(@ModelAttribute("note") Note note, Model model){
-        Note newNote = new Note(null, note.getNoteTitle(), note.getNoteDescription(), getUserid());
-        noteService.addNote(newNote);
+        try {
 
-        return "redirect:/result";
+            Note newNote = new Note(null, note.getNoteTitle(), note.getNoteDescription(), getUserid());
+            noteService.addNote(newNote);
+
+            return "redirect:/result/success";
+        } catch(Exception e ) {
+            return "redirect:/result/error";
+        }
     }
 
     @GetMapping(value = "/notes/edit/{id}")
@@ -54,18 +59,25 @@ public class HomeController {
 
     @PostMapping(value = "/notes/update")
     public String updateNote(@ModelAttribute("note") Note note, Model model) {
-        noteService.updateNote(note.getNoteid(), note.getNoteTitle(), note.getNoteDescription());
+        try {
+            noteService.updateNote(note.getNoteid(), note.getNoteTitle(), note.getNoteDescription());
 
-        return "redirect:/result";
+            return "redirect:/result/success";
+        } catch(Exception e) {
+            return "redirect:/result/error";
+        }
     }
 
     @GetMapping(value = "/notes/delete/{id}")
     public String deleteNote(@PathVariable("id") Integer noteid, @ModelAttribute("note") Note note, Model model) {
-        noteService.deleteNote(noteid);
-
-        return "redirect:/result";
+        try {
+            noteService.deleteNote(noteid);
+            return "redirect:/result/success";
+        }
+        catch(Exception e) {
+            return "redirect:/result/error";
+        }
     }
-
 
 
     public Integer getUserid(){
