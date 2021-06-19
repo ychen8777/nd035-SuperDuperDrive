@@ -34,4 +34,29 @@ public class AccessTests {
         Assertions.assertEquals("Login", driver.getTitle());
     }
 
+    // before login
+    @Test
+    public void getHomePageBeforeLogin() {
+        driver.get("http://localhost:" + port + "/home");
+        String actualUrl= driver.getCurrentUrl();
+        String expectedUrl= "http://localhost:" + port + "/login";
+        Assertions.assertEquals(expectedUrl,actualUrl);
+    }
+
+    @Test
+    public void getSignupPageBeforeLogin() {
+        driver.get("http://localhost:" + port + "/signup");
+        String actualUrl= driver.getCurrentUrl();
+        String expectedUrl= "http://localhost:" + port + "/signup";
+        Assertions.assertEquals(expectedUrl,actualUrl);
+    }
+
+    @Test
+    public void getResultPageBeforeLogin() {
+        driver.get("http://localhost:" + port + "/result");
+        String actualUrl= driver.getCurrentUrl();
+        String expectedUrl= "http://localhost:" + port + "/login";
+        Assertions.assertEquals(expectedUrl,actualUrl);
+    }
+
 }
