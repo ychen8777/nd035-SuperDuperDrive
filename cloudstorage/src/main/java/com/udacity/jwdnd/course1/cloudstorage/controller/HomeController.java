@@ -52,6 +52,12 @@ public class HomeController {
         return "home";
     }
 
+    @PostMapping(value = "/notes/update")
+    public String updateNote(@ModelAttribute("note") Note note, Model model) {
+        noteService.updateNote(note.getNoteid(), note.getNoteTitle(), note.getNoteDescription());
+
+        return "redirect:/result";
+    }
 
     @GetMapping(value = "/notes/delete/{id}")
     public String deleteNote(@PathVariable("id") Integer noteid, @ModelAttribute("note") Note note, Model model) {
@@ -59,7 +65,6 @@ public class HomeController {
 
         return "redirect:/result";
     }
-
 
 
 
