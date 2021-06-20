@@ -1,6 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.juli.logging.Log;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,6 +20,7 @@ public class AccessTests {
 
     private static WebDriver driver;
     private SignupPage signupPage;
+    private LoginPage loginPage;
 
     @BeforeAll
     public static void beforeAll() {
@@ -87,6 +89,28 @@ public class AccessTests {
         returnMsg= driver.findElement(By.id("signup-error"));
         Assertions.assertNotNull(returnMsg, "error message not found");
 
+    }
+
+    // user login
+    @Test
+    public void loginUser() {
+        getLoginPage();
+        this.loginPage = new LoginPage(driver);
+        String testUsername = "SeleniumTest2";
+        String testPassword = "Selenium";
+
+        // invalid username or password
+        loginPage.loginUser(testUsername, testPassword);
+        WebElement returnMsg= driver.findElement(By.id("login-error"));
+        Assertions.assertNotNull(returnMsg, "login error message not found");
+
+        // valid login
+        testPassword = "SeleniumTest2";
+        loginPage.loginUser(testUsername, testPassword);
+
+        String actualUrl= driver.getCurrentUrl();
+        String expectedUrl= "http://localhost:" + port + "/home";
+        Assertions.assertEquals(actualUrl, expectedUrl);
     }
 
 }
