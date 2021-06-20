@@ -81,7 +81,7 @@ public class AccessTests {
         getSignupPageBeforeLogin();
         this.signupPage = new SignupPage(driver);
         String testFirstName = "Selenium";
-        String testLastName = "Test2";
+        String testLastName = "Test3";
         String testUsername = "SeleniumTest2";
         String testPassword = "SeleniumTest2";
 
@@ -120,6 +120,13 @@ public class AccessTests {
         Assertions.assertEquals(actualUrl, expectedUrl);
     }
 
-    
+    // log out
+    @Test
+    @Order(7)
+    public void logoutUser() {
+        WebElement logoutButton = driver.findElement(By.id("logoutButton"));
+        logoutButton.click();
+        getHomePageBeforeLogin();
+    }
 
 }
