@@ -51,8 +51,8 @@ public class AccessTests {
     @Order(2)
     public void getHomePageBeforeLogin() {
         driver.get("http://localhost:" + port + "/home");
-        String actualUrl= driver.getCurrentUrl();
-        String expectedUrl= "http://localhost:" + port + "/login";
+        String actualUrl = driver.getCurrentUrl();
+        String expectedUrl = "http://localhost:" + port + "/login";
         Assertions.assertEquals(expectedUrl,actualUrl);
     }
 
@@ -60,8 +60,8 @@ public class AccessTests {
     @Order(3)
     public void getSignupPageBeforeLogin() {
         driver.get("http://localhost:" + port + "/signup");
-        String actualUrl= driver.getCurrentUrl();
-        String expectedUrl= "http://localhost:" + port + "/signup";
+        String actualUrl = driver.getCurrentUrl();
+        String expectedUrl = "http://localhost:" + port + "/signup";
         Assertions.assertEquals(expectedUrl,actualUrl);
     }
 
@@ -69,8 +69,8 @@ public class AccessTests {
     @Order(4)
     public void getResultPageBeforeLogin() {
         driver.get("http://localhost:" + port + "/result");
-        String actualUrl= driver.getCurrentUrl();
-        String expectedUrl= "http://localhost:" + port + "/login";
+        String actualUrl = driver.getCurrentUrl();
+        String expectedUrl = "http://localhost:" + port + "/login";
         Assertions.assertEquals(expectedUrl,actualUrl);
     }
 
@@ -87,12 +87,12 @@ public class AccessTests {
 
         // successful sign up
         signupPage.signupUser(testFirstName, testLastName, testUsername, testPassword);
-        WebElement returnMsg= driver.findElement(By.id("signup-success"));
+        WebElement returnMsg = driver.findElement(By.id("signup-success"));
         Assertions.assertNotNull(returnMsg, "success message not found");
 
         // unsuccessful sign up, username not available
         signupPage.signupUser(testFirstName, testLastName, testUsername, testPassword);
-        returnMsg= driver.findElement(By.id("signup-error"));
+        returnMsg = driver.findElement(By.id("signup-error"));
         Assertions.assertNotNull(returnMsg, "error message not found");
 
     }
@@ -108,15 +108,15 @@ public class AccessTests {
 
         // invalid username or password
         loginPage.loginUser(testUsername, testPassword);
-        WebElement returnMsg= driver.findElement(By.id("login-error"));
+        WebElement returnMsg = driver.findElement(By.id("login-error"));
         Assertions.assertNotNull(returnMsg, "login error message not found");
 
         // valid login
         testPassword = "SeleniumTest2";
         loginPage.loginUser(testUsername, testPassword);
 
-        String actualUrl= driver.getCurrentUrl();
-        String expectedUrl= "http://localhost:" + port + "/home";
+        String actualUrl = driver.getCurrentUrl();
+        String expectedUrl = "http://localhost:" + port + "/home";
         Assertions.assertEquals(actualUrl, expectedUrl);
     }
 
