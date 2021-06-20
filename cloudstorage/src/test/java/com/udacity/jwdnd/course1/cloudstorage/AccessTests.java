@@ -13,6 +13,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AccessTests {
 
     @LocalServerPort
@@ -39,6 +40,7 @@ public class AccessTests {
     }
 
     @Test
+    @Order(1)
     public void getLoginPage() {
         driver.get("http://localhost:" + port + "/login");
         Assertions.assertEquals("Login", driver.getTitle());
@@ -46,6 +48,7 @@ public class AccessTests {
 
     // before login
     @Test
+    @Order(2)
     public void getHomePageBeforeLogin() {
         driver.get("http://localhost:" + port + "/home");
         String actualUrl= driver.getCurrentUrl();
@@ -54,6 +57,7 @@ public class AccessTests {
     }
 
     @Test
+    @Order(3)
     public void getSignupPageBeforeLogin() {
         driver.get("http://localhost:" + port + "/signup");
         String actualUrl= driver.getCurrentUrl();
@@ -62,6 +66,7 @@ public class AccessTests {
     }
 
     @Test
+    @Order(4)
     public void getResultPageBeforeLogin() {
         driver.get("http://localhost:" + port + "/result");
         String actualUrl= driver.getCurrentUrl();
@@ -71,6 +76,7 @@ public class AccessTests {
 
     // sign up user
     @Test
+    @Order(5)
     public void signupUser() {
         getSignupPageBeforeLogin();
         this.signupPage = new SignupPage(driver);
@@ -93,6 +99,7 @@ public class AccessTests {
 
     // user login
     @Test
+    @Order(6)
     public void loginUser() {
         getLoginPage();
         this.loginPage = new LoginPage(driver);
@@ -112,5 +119,7 @@ public class AccessTests {
         String expectedUrl= "http://localhost:" + port + "/home";
         Assertions.assertEquals(actualUrl, expectedUrl);
     }
+
+    
 
 }
