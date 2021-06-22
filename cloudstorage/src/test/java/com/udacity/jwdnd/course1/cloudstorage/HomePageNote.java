@@ -13,17 +13,51 @@ public class HomePageNote {
     @FindBy(id = "addNoteButton")
     private WebElement addNoteButton;
 
+    // Note modal
+    @FindBy(id = "noteModal")
+    private WebElement noteModal;
+
+    @FindBy(id = "note-title")
+    private WebElement noteTitleField;
+
+    @FindBy(id = "note-description")
+    private WebElement noteDescriptionField;
+
+    @FindBy(id = "noteSubmit")
+    private WebElement noteSubmitButton;
+
+    @FindBy(xpath = "//button[text()='Close']")
+    private WebElement closeButton;
+
 
     public HomePageNote(WebDriver driver){
         PageFactory.initElements(driver, this);
     }
 
-    public void getNoteTab() {
+    public void gotoNoteTab() {
         notesTab.click();
     }
 
-    public void getNoteModal() {
+    public void openNoteModal() {
         addNoteButton.click();
     }
 
+    //Note modal
+    public void closeModal() {
+        closeButton.click();
+    }
+
+    public void addNewNote(String title, String description) {
+        noteTitleField.sendKeys(title);
+        noteDescriptionField.sendKeys(description);
+        noteSubmitButton.click();
+    }
+
+    public WebElement getNotesTab() {
+        return notesTab;
+    }
+
+    public WebElement getNoteModal() {
+        return noteModal;
+    }
 }
