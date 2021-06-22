@@ -17,8 +17,8 @@ public class NoteTests {
     private int port;
 
     private static WebDriver driver;
-    private SignupPage signupPage;
     private LoginPage loginPage;
+    private HomePageNote homePageNote;
 
     @BeforeAll
     public static void beforeAll() {
@@ -35,7 +35,7 @@ public class NoteTests {
 
     @BeforeEach
     public void beforeEach() throws InterruptedException {
-        Thread.sleep(2000);
+        Thread.sleep(1600);
     }
 
     // user login
@@ -48,9 +48,43 @@ public class NoteTests {
         String testPassword = "SeleniumTest2";
         loginPage.loginUser(testUsername, testPassword);
 
-        String actualUrl= driver.getCurrentUrl();
-        String expectedUrl= "http://localhost:" + port + "/home";
+        String actualUrl = driver.getCurrentUrl();
+        String expectedUrl = "http://localhost:" + port + "/home";
         Assertions.assertEquals(actualUrl, expectedUrl);
     }
+
+    @Test
+    @Order(2)
+    public void getNoteTab() {
+        // WebElement noteTab = driver.findElement(By.id("nav-notes-tab"));
+        // noteTab.click();
+
+        //WebElement addNoteButton =  driver.findElement(By.id("addNoteButton"));
+        //Assertions.assertNotNull(addNoteButton, "Add new note button not found");
+        this.homePageNote = new HomePageNote(driver);
+
+        WebElement noteTab = homePageNote.getNotesTab();
+        homePageNote.gotoNoteTab();
+        Assertions.assertTrue(Boolean.parseBoolean(noteTab.getAttribute("aria-selected")), "Note tab is not active.");
+    }
+
+//    @Test
+//    @Order(3)
+//    public void openNoteModal() {
+//        //homePageNote.getNoteModal();
+//        //this.noteModal = new NoteModal(driver);
+//
+//        //WebElement saveNoteButton = driver.findElement(By.id("noteSubmit"));
+//        //Assertions.assertNotNull(saveNoteButton, "save changes button not found");
+//
+//    }
+//
+//    @Test
+//    @Order(4)
+//    public void closeNoteModal() {
+//        //noteModal.closeModal();
+//        //WebElement saveNoteButton = driver.findElement(By.id("noteSubmit"));
+//        //Assertions.assertNull(saveNoteButton, "Note modal not closed properly");
+//    }
 
 }
