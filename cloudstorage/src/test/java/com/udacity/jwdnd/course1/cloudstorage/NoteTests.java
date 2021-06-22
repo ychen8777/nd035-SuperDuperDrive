@@ -96,4 +96,27 @@ public class NoteTests {
         Assertions.assertFalse(Boolean.parseBoolean(noteModal.getAttribute("aria-hidden")), "Add note modal failed to close.");
     }
 
+    @Test
+    @Order(5)
+    public void addNewNote() throws InterruptedException {
+        openNoteModal();
+        //Thread.sleep(1000);
+        //this.homePageNote.closeModal();
+
+        //*[@id="noteTable"]/tbody[1]/tr/th
+        String noteTitle = "1 note by Selenium";
+        String noteDesc = "first note by Selenium";
+        this.homePageNote.addNewNote(noteTitle, noteDesc);
+
+        Thread.sleep(500);
+
+        // check the note added
+        String actualTitle = driver.findElement(By.xpath("//*[@id='noteTable']/tbody/tr[1]/th[1]")).getText();
+        String actualDesc = driver.findElement(By.xpath("//*[@id='noteTable']/tbody/tr[1]/td[2]")).getText();
+
+        Assertions.assertEquals(noteTitle, actualTitle);
+        Assertions.assertEquals(noteDesc, actualDesc);
+
+    }
+
 }
