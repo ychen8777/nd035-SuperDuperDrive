@@ -83,14 +83,17 @@ public class NoteTests {
         Assertions.assertTrue(Boolean.parseBoolean(noteModal.getAttribute("aria-hidden")), "Add note modal is not showing.");
      }
 
+    @Test
+    @Order(4)
+    public void closeNoteModal() {
+        //noteModal.closeModal();
+        //WebElement saveNoteButton = driver.findElement(By.id("noteSubmit"));
+        //Assertions.assertNull(saveNoteButton, "Note modal not closed properly");
 
-//
-//    @Test
-//    @Order(4)
-//    public void closeNoteModal() {
-//        //noteModal.closeModal();
-//        //WebElement saveNoteButton = driver.findElement(By.id("noteSubmit"));
-//        //Assertions.assertNull(saveNoteButton, "Note modal not closed properly");
-//    }
+        this.homePageNote = new HomePageNote(driver);
+        this.homePageNote.closeModal();
+        WebElement noteModal = this.homePageNote.getNoteModal();
+        Assertions.assertFalse(Boolean.parseBoolean(noteModal.getAttribute("aria-hidden")), "Add note modal failed to close.");
+    }
 
 }
