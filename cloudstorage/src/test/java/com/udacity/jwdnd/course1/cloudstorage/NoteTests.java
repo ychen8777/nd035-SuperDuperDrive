@@ -63,21 +63,27 @@ public class NoteTests {
         //Assertions.assertNotNull(addNoteButton, "Add new note button not found");
         this.homePageNote = new HomePageNote(driver);
 
-        WebElement noteTab = homePageNote.getNotesTab();
-        homePageNote.gotoNoteTab();
+        WebElement noteTab = this.homePageNote.getNotesTab();
+        this.homePageNote.gotoNoteTab();
         Assertions.assertTrue(Boolean.parseBoolean(noteTab.getAttribute("aria-selected")), "Note tab is not active.");
     }
 
-//    @Test
-//    @Order(3)
-//    public void openNoteModal() {
-//        //homePageNote.getNoteModal();
-//        //this.noteModal = new NoteModal(driver);
-//
-//        //WebElement saveNoteButton = driver.findElement(By.id("noteSubmit"));
-//        //Assertions.assertNotNull(saveNoteButton, "save changes button not found");
-//
-//    }
+    @Test
+    @Order(3)
+    public void openNoteModal() {
+        //homePageNote.getNoteModal();
+        //this.noteModal = new NoteModal(driver);
+
+        //WebElement saveNoteButton = driver.findElement(By.id("noteSubmit"));
+        //Assertions.assertNotNull(saveNoteButton, "save changes button not found");
+
+        this.homePageNote = new HomePageNote(driver);
+        this.homePageNote.openNoteModal();
+        WebElement noteModal = this.homePageNote.getNoteModal();
+        Assertions.assertTrue(Boolean.parseBoolean(noteModal.getAttribute("aria-hidden")), "Add note modal is not showing.");
+     }
+
+
 //
 //    @Test
 //    @Order(4)
