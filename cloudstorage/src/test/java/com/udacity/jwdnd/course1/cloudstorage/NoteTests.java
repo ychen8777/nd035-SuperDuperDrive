@@ -6,6 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
@@ -106,16 +108,40 @@ public class NoteTests {
         //*[@id="noteTable"]/tbody[1]/tr/th
         String noteTitle = "1 note by Selenium";
         String noteDesc = "first note by Selenium";
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        //WebElement submitButton = wait.until(webDriver -> webDriver.findElement(By.id("noteSaveButton")));
+        wait.until(ExpectedConditions.elementToBeClickable(this.homePageNote.getNoteSubmitButton()));
+
+        // Thread.sleep(1000);
         this.homePageNote.addNewNote(noteTitle, noteDesc);
 
-        Thread.sleep(500);
+        Thread.sleep(1000);
+
+        // land to result page
+        String actualUrl = driver.getCurrentUrl();
+        String resultUrl = "http://localhost:" + port + "/result/success";
+        Assertions.assertEquals(actualUrl, resultUrl);
+
+        // return to home page
+        driver.get("http://localhost:" + port + "/home");
+        this.homePageNote.gotoNoteTab();
 
         // check the note added
-        String actualTitle = driver.findElement(By.xpath("//*[@id='noteTable']/tbody/tr[1]/th[1]")).getText();
-        String actualDesc = driver.findElement(By.xpath("//*[@id='noteTable']/tbody/tr[1]/td[2]")).getText();
+        //*[@id="noteTable"]/tbody/tr/th
+        //*[@id="noteTable"]/tbody/tr/td[2]
+        String actualTitle = driver.findElement(By.xpath("//*[@id='noteTable']/tbody/tr/th")).getAttribute("innerHTML");
+        String actualDesc = driver.findElement(By.xpath("//*[@id='noteTable']/tbody/tr/td[2]")).getAttribute("innerHTML");
+        //System.out.println(actualTitle + ":" + actualDesc);
 
         Assertions.assertEquals(noteTitle, actualTitle);
         Assertions.assertEquals(noteDesc, actualDesc);
+
+        //*[@id="noteTable"]/tbody/tr/td[1]/button
+        //*[@id="noteTable"]/tbody/tr/td[1]/a
+
+        //*[@id="noteTable"]/tbody/tr[2]/th
+        //*[@id="noteTable"]/tbody/tr[2]/td[2]
+
 
     }
 
