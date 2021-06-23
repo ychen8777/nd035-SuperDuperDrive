@@ -23,7 +23,7 @@ public class HomePageNote {
     @FindBy(id = "note-description")
     private WebElement noteDescriptionField;
 
-    @FindBy(id = "noteSubmit")
+    @FindBy(id = "noteSaveButton")
     private WebElement noteSubmitButton;
 
     @FindBy(xpath = "//button[text()='Close']")
@@ -59,5 +59,9 @@ public class HomePageNote {
 
     public WebElement getNoteModal() {
         return noteModal;
+    }
+
+    public WebElement getNoteSubmitButton() {
+        return noteSubmitButton;
     }
 }
