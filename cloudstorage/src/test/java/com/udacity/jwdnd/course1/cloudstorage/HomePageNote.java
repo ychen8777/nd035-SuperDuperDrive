@@ -29,6 +29,18 @@ public class HomePageNote {
     @FindBy(xpath = "//button[text()='Close']")
     private WebElement closeButton;
 
+    @FindBy(id = "editNoteModal")
+    private WebElement editNoteModal;
+
+    @FindBy(id = "edit-note-title")
+    private WebElement editNoteTitleField;
+
+    @FindBy(id = "edit-note-description")
+    private WebElement editNoteDescriptionField;
+
+    @FindBy(id = "editNoteSaveButton")
+    private WebElement editNoteSubmitButton;
+
 
     public HomePageNote(WebDriver driver){
         PageFactory.initElements(driver, this);
@@ -63,5 +75,19 @@ public class HomePageNote {
 
     public WebElement getNoteSubmitButton() {
         return noteSubmitButton;
+    }
+
+    public WebElement getEditNoteModal() {
+        return editNoteModal;
+    }
+
+    public WebElement getEditNoteSubmitButton() {
+        return editNoteSubmitButton;
+    }
+
+    public void editNote(String title, String description) {
+        editNoteTitleField.sendKeys(title);
+        editNoteDescriptionField.sendKeys(description);
+        editNoteSubmitButton.click();
     }
 }
