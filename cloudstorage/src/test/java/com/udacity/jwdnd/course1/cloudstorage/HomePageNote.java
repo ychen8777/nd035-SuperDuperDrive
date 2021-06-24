@@ -90,4 +90,9 @@ public class HomePageNote {
         editNoteDescriptionField.sendKeys(description);
         editNoteSubmitButton.click();
     }
+
+    public void clearEditField() {
+        editNoteTitleField.clear();
+        editNoteDescriptionField.clear();
+    }
 }
