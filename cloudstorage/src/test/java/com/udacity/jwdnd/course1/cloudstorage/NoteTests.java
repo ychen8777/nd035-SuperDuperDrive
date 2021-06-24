@@ -136,13 +136,60 @@ public class NoteTests {
         Assertions.assertEquals(noteTitle, actualTitle);
         Assertions.assertEquals(noteDesc, actualDesc);
 
-        //*[@id="noteTable"]/tbody/tr/td[1]/button
-        //*[@id="noteTable"]/tbody/tr/td[1]/a
+    }
 
-        //*[@id="noteTable"]/tbody/tr[2]/th
-        //*[@id="noteTable"]/tbody/tr[2]/td[2]
+    //*[@id="noteTable"]/tbody/tr/td[1]/button
+    //*[@id="noteTable"]/tbody/tr/td[1]/a
 
+    //*[@id="noteTable"]/tbody/tr[2]/th
+    //*[@id="noteTable"]/tbody/tr[2]/td[2]
+
+    @Test
+    @Order(6)
+    public void editNote() throws InterruptedException {
+        String newTitle = "Edited by Selenium";
+        String newDesc = "Note desc edited by Selenium";
+
+        // open edit note modal
+        this.homePageNote = new HomePageNote(driver);
+        WebElement editNoteButton = driver.findElement(By.xpath("//*[@id='noteTable']/tbody/tr/td[1]/button"));
+        editNoteButton.click();
+        Thread.sleep(1000);
+        WebElement editNoteModal = this.homePageNote.getEditNoteModal();
+        Assertions.assertFalse(Boolean.parseBoolean(editNoteModal.getAttribute("aria-hidden")), "Edit note modal is not showing.");
+
+        // send new note information to modal
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        //WebElement submitButton = wait.until(webDriver -> webDriver.findElement(By.id("noteSaveButton")));
+        wait.until(ExpectedConditions.elementToBeClickable(this.homePageNote.getEditNoteSubmitButton()));
+
+        this.homePageNote.clearEditField();
+        Thread.sleep(1000);
+        this.homePageNote.editNote(newTitle, newDesc);
+
+        Thread.sleep(1000);
+
+        // land to result page
+        String actualUrl = driver.getCurrentUrl();
+        String resultUrl = "http://localhost:" + port + "/result/success";
+        Assertions.assertEquals(actualUrl, resultUrl);
+
+        // return to home page
+        driver.get("http://localhost:" + port + "/home");
+        this.homePageNote.gotoNoteTab();
+
+        // check the note after edit
+        //*[@id="noteTable"]/tbody/tr/th
+        //*[@id="noteTable"]/tbody/tr/td[2]
+        String actualTitle = driver.findElement(By.xpath("//*[@id='noteTable']/tbody/tr/th")).getAttribute("innerHTML");
+        String actualDesc = driver.findElement(By.xpath("//*[@id='noteTable']/tbody/tr/td[2]")).getAttribute("innerHTML");
+        //System.out.println(actualTitle + ":" + actualDesc);
+
+        Assertions.assertEquals(newTitle, actualTitle);
+        Assertions.assertEquals(newDesc, actualDesc);
 
     }
+
+    //*[@id="noteTable"]/tbody/tr/th
 
 }
