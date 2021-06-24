@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
+import java.util.List;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NoteTests {
@@ -190,6 +192,37 @@ public class NoteTests {
 
     }
 
-    //*[@id="noteTable"]/tbody/tr/th
+    @Test
+    @Order(7)
+    public void deleteNote(){
+
+        // return to home page
+        driver.get("http://localhost:" + port + "/home");
+        this.homePageNote = new HomePageNote(driver);
+        this.homePageNote.gotoNoteTab();
+
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        //WebElement submitButton = wait.until(webDriver -> webDriver.findElement(By.id("noteSaveButton")));
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[@id='noteTable']/tbody/tr/td[1]/a"))));
+
+        WebElement deleteButton = driver.findElement(By.xpath("//*[@id='noteTable']/tbody/tr/td[1]/a"));
+        deleteButton.click();
+
+        // land to result page
+        String actualUrl = driver.getCurrentUrl();
+        String resultUrl = "http://localhost:" + port + "/result/success";
+        Assertions.assertEquals(actualUrl, resultUrl);
+
+        // return to home page
+        driver.get("http://localhost:" + port + "/home");
+        this.homePageNote.gotoNoteTab();
+
+        // Check the table is empty
+        List<WebElement> tableRow = driver.findElements(By.xpath("//*[@id='noteTable']/tbody/tr"));
+        Assertions.assertEquals(0, tableRow.size());
+
+    }
+
+
 
 }
