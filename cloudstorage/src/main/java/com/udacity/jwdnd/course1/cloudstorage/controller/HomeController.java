@@ -36,7 +36,7 @@ public class HomeController {
 
     // Note
 
-    @PostMapping(value = "addNote")
+    @PostMapping(value = "/notes/add")
     public String addNote(@ModelAttribute("note") Note note, Model model){
         try {
 
