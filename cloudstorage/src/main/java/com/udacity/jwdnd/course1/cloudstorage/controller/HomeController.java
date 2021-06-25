@@ -1,7 +1,9 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
+import com.udacity.jwdnd.course1.cloudstorage.service.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.service.NoteService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,13 +19,16 @@ public class HomeController {
 
     private NoteService noteService;
     //private User user;
+    private CredentialService credentialService;
 
-    public HomeController(NoteService noteService) {
+    public HomeController(NoteService noteService, CredentialService credentialService) {
+
         this.noteService = noteService;
+        this.credentialService = credentialService;
     }
 
     @GetMapping("/home")
-    public String gotoHome(@ModelAttribute("note") Note note, Model model){
+    public String gotoHome(@ModelAttribute("note") Note note, @ModelAttribute("credential") Credential credential, Model model){
         //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         //User user = (User) auth.getPrincipal();
         //System.out.println("userid: " + user.getUserid());
@@ -75,6 +80,18 @@ public class HomeController {
             return "redirect:/result/success";
         }
         catch(Exception e) {
+            return "redirect:/result/error";
+        }
+    }
+
+    // Credentials
+    @PostMapping(value = "/credentials/add")
+    public String addCredential(@ModelAttribute("credential") Credential credential, Model model) {
+        try {
+            credentialService.addCredential(credential.getUrl(), credential.getUsername(), credential.getPassword(), getUserid());
+            return "redirect:/result/success";
+        } catch(Exception e ) {
+            System.out.println(e);
             return "redirect:/result/error";
         }
     }
