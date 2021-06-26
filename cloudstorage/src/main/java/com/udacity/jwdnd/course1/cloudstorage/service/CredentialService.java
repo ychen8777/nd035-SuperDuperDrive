@@ -5,7 +5,9 @@ import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 @Service
 public class CredentialService {
@@ -30,6 +32,14 @@ public class CredentialService {
         Credential credential = new Credential(null, url, username, encodedKey, encryptedPassword, userid);
         //return 0;
         return credentialMapper.insertCredential(credential);
+    }
+
+    public ArrayList<Credential> getCredentialList(Integer userid) {
+        ArrayList<Credential> credentialList = (ArrayList<Credential>) credentialMapper.getCredentialList(userid);
+        for (Credential credential : credentialList){
+            credential.setDecryptedPassword(decryptPassword(credential.getPassword(), credential.getKey()));
+        }
+        return credentialList;
     }
 
     public String decryptPassword(String encryptedPassword, String key) {
