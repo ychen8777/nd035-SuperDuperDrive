@@ -33,14 +33,18 @@ public class HomeController {
         //User user = (User) auth.getPrincipal();
         //System.out.println("userid: " + user.getUserid());
 
+        // list notes
         ArrayList<Note> noteList = (ArrayList<Note>) noteService.getNoteList(getUserid());
         model.addAttribute("noteList", noteList);
+
+        // list credentials
+        ArrayList<Credential> credentialList = (ArrayList<Credential>) credentialService.getCredentialList(getUserid());
+        model.addAttribute("credentials", credentialList);
 
         return "home";
     }
 
     // Note
-
     @PostMapping(value = "/notes/add")
     public String addNote(@ModelAttribute("note") Note note, Model model){
         try {
