@@ -95,7 +95,17 @@ public class HomeController {
             credentialService.addCredential(credential.getUrl(), credential.getUsername(), credential.getPassword(), getUserid());
             return "redirect:/result/success";
         } catch(Exception e ) {
-            System.out.println(e);
+            //System.out.println(e);
+            return "redirect:/result/error";
+        }
+    }
+
+    @GetMapping(value = "/credentials/delete/{id}")
+    public String deleteCredential(@PathVariable("id") Integer credentialid, @ModelAttribute("credential") Credential credential, Model model) {
+        try{
+            credentialService.deleteCredential(credentialid);
+            return "redirect:/result/success";
+        } catch(Exception e) {
             return "redirect:/result/error";
         }
     }
