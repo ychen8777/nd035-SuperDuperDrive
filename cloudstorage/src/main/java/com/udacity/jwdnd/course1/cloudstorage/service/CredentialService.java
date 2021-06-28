@@ -42,6 +42,13 @@ public class CredentialService {
         return credentialList;
     }
 
+    public int updateCredential(Integer credentialid, String url, String username, String decryptedPassword) {
+        Credential credential = credentialMapper.getCredential(credentialid);
+        String encodedKey = credential.getKey();
+        String encryptedPassword = encryptionService.encryptValue(decryptedPassword, encodedKey);
+        return credentialMapper.updateCredential(credentialid, url, username, encryptedPassword);
+    }
+
     public String decryptPassword(String encryptedPassword, String key) {
         return encryptionService.decryptValue(encryptedPassword, key);
     }
