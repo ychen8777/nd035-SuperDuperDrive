@@ -169,7 +169,7 @@
                                 <tbody>
                                 <tr th:each="credential : ${credentials}">
                                     <td>
-                                        <button type="button" class="btn btn-success">Edit</button>
+                                        <button type="button" class="btn btn-success" th:data-credential="${credential}" th:attr="onclick=|showEditCredentialModal('${credential.credentialid}','${credential.url}','${credential.username}', '${credential.decryptedPassword}')|">View/Edit</button>
                                         <a class="btn btn-danger" th:href="@{'/credentials/delete/{id}' (id=${credential.credentialid})}">Delete</a>
                                     </td>
                                     <th scope="row" th:text="${credential.url}">Example Credential URL</th>
@@ -214,6 +214,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -249,6 +250,15 @@
                 $('#credential-username').val(username ? username : '');
                 $('#credential-password').val(password ? password : '');
                 $('#credentialModal').modal('show');
+            }
+
+            // For opening the edit credentials modal
+            function showEditCredentialModal(credentialId, url, username, decryptedPassword) {
+                $('#edit-credential-id').val(credentialId);
+                $('#edit-credential-url').val(url);
+                $('#edit-credential-username').val(username);
+                $('#edit-credential-password').val(decryptedPassword);
+                $('#editCredentialModal').modal('show');
             }
         </script>
     </body>
