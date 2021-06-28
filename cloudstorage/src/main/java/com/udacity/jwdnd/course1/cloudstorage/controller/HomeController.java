@@ -92,7 +92,19 @@ public class HomeController {
     @PostMapping(value = "/credentials/add")
     public String addCredential(@ModelAttribute("credential") Credential credential, Model model) {
         try {
-            credentialService.addCredential(credential.getUrl(), credential.getUsername(), credential.getPassword(), getUserid());
+            credentialService.addCredential(credential.getUrl(), credential.getUsername(), credential.getDecryptedPassword(), getUserid());
+            return "redirect:/result/success";
+        } catch(Exception e ) {
+            //System.out.println(e);
+            return "redirect:/result/error";
+        }
+    }
+
+    @PostMapping(value = "/credentials/update")
+    public String updateCredential(@ModelAttribute("credential") Credential credential, Model model) {
+        try {
+            credentialService.updateCredential(credential.getCredentialid(), credential.getUrl(), credential.getUsername(),
+                    credential.getDecryptedPassword());
             return "redirect:/result/success";
         } catch(Exception e ) {
             //System.out.println(e);

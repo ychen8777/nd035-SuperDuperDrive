@@ -224,7 +224,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="#" method="PUT" th:action="@{/credentials/update}" th:object="${credential}" >
+                                        <form action="#" method="POST" th:action="@{/credentials/update}" th:object="${credential}" >
                                             <input type="hidden" name="credentialId" id="edit-credential-id" th:field="*{credentialid}">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">URL</label>
