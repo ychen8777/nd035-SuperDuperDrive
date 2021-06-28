@@ -20,13 +20,13 @@ public class CredentialService {
         this.credentialMapper = credentialMapper;
     }
 
-    public int addCredential(String url, String username, String password, Integer userid) {
+    public int addCredential(String url, String username, String decryptedPassword, Integer userid) {
         // generate key and encrypt password
         SecureRandom random = new SecureRandom();
         byte[] key = new byte[16];
         random.nextBytes(key);
         String encodedKey = Base64.getEncoder().encodeToString(key);
-        String encryptedPassword = encryptionService.encryptValue(password, encodedKey);
+        String encryptedPassword = encryptionService.encryptValue(decryptedPassword, encodedKey);
 
         // save new credential
         Credential credential = new Credential(null, url, username, encodedKey, encryptedPassword, userid);

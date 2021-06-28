@@ -202,7 +202,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">Password</label>
-                                                <input type="text" name= "password" class="form-control" id="credential-password" th:field="*{password}" maxlength="30" required>
+                                                <input type="text" name= "password" class="form-control" id="credential-password" th:field="*{decryptedPassword}" maxlength="30" required>
                                             </div>
                                             <button id="credentialSubmit" type="submit" class="d-none"></button>
                                         </form>
@@ -225,7 +225,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <form action="#" method="PUT" th:action="@{/credentials/update}" th:object="${credential}" >
-                                            <input type="hidden" name="credentialId" id="edit-credential-id">
+                                            <input type="hidden" name="credentialId" id="edit-credential-id" th:field="*{credentialid}">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">URL</label>
                                                 <input type="text" name= "url" class="form-control" id="edit-credential-url" th:field="*{url}" maxlength="100" required>
@@ -236,7 +236,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">Password</label>
-                                                <input type="text" name= "password" class="form-control" id="edit-credential-password" th:field="*{password}" maxlength="30" required>
+                                                <input type="text" name= "password" class="form-control" id="edit-credential-password" th:field="*{decryptedPassword}" maxlength="30" required>
                                             </div>
                                             <button id="editCredentialSubmit" type="submit" class="d-none"></button>
                                         </form>
