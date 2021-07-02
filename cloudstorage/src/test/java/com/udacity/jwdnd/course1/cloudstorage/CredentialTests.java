@@ -3,6 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -16,6 +17,7 @@ public class CredentialTests {
 
     private static WebDriver driver;
     private LoginPage loginPage;
+    private HomePageCredential homePageCredential;
 
     @BeforeAll
     public static void beforeAll() {
@@ -47,6 +49,19 @@ public class CredentialTests {
         String actualUrl = driver.getCurrentUrl();
         String expectedUrl = "http://localhost:" + port + "/home";
         Assertions.assertEquals(actualUrl, expectedUrl);
+    }
+
+    @Test
+    @Order(2)
+    public void gotoCredentialTab() {
+        driver.get("http://localhost:" + port + "/home");
+
+        this.homePageCredential = new HomePageCredential(driver);
+        this.homePageCredential.clickCredentialTab();
+
+        WebElement credentialsTab = this.homePageCredential.getCredentialsTab();
+        Assertions.assertTrue(Boolean.parseBoolean(credentialsTab.getAttribute("aria-selected")), "Note tab is not active.");
+
     }
 
 }
