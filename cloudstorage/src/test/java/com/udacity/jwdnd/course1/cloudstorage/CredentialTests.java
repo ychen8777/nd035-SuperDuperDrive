@@ -5,6 +5,8 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
@@ -61,7 +63,32 @@ public class CredentialTests {
 
         WebElement credentialsTab = this.homePageCredential.getCredentialsTab();
         Assertions.assertTrue(Boolean.parseBoolean(credentialsTab.getAttribute("aria-selected")), "Note tab is not active.");
+    }
 
+    @Test
+    @Order(3)
+    public void openCredentialModal() {
+        this.homePageCredential = new HomePageCredential(driver);
+        this.homePageCredential.openCredentialModal();
+
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(this.homePageCredential.getCredentialSaveButton()));
+
+        WebElement credentialModal = this.homePageCredential.getCredentialModal();
+        Assertions.assertFalse(Boolean.parseBoolean(credentialModal.getAttribute("aria-hidden")), "Add credential modal is not showing.");
+
+    }
+
+    @Test
+    @Order(4)
+    public void closeCredentialModal() throws InterruptedException {
+        this.homePageCredential = new HomePageCredential(driver);
+        this.homePageCredential.closeCredentialModal();
+
+        Thread.sleep(1000);
+
+        WebElement credentialModal = this.homePageCredential.getCredentialModal();
+        Assertions.assertTrue(Boolean.parseBoolean(credentialModal.getAttribute("aria-hidden")), "Credential modal is not closed.");
     }
 
 }

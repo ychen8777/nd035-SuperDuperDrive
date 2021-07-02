@@ -13,6 +13,16 @@ public class HomePageCredential {
     @FindBy(id = "addCredentialButton")
     private WebElement addCredentialButton;
 
+    // Credential modal
+    @FindBy(id = "credentialModal")
+    private WebElement credentialModal;
+
+    @FindBy(xpath = "//*[@id=\"credentialModal\"]/div/div/div[3]/button[1]")
+    private WebElement closeButton;
+
+    @FindBy(id = "credentialSaveButton")
+    private WebElement credentialSaveButton;
+
     public HomePageCredential(WebDriver driver){
         PageFactory.initElements(driver, this);
     }
@@ -22,7 +32,23 @@ public class HomePageCredential {
         credentialsTab.click();
     }
 
+    public void openCredentialModal() {
+        addCredentialButton.click();
+    }
+
+    public void closeCredentialModal() {
+        closeButton.click();
+    }
+
     public WebElement getCredentialsTab() {
         return credentialsTab;
+    }
+
+    public WebElement getCredentialModal() {
+        return credentialModal;
+    }
+
+    public WebElement getCredentialSaveButton() {
+        return credentialSaveButton;
     }
 }
