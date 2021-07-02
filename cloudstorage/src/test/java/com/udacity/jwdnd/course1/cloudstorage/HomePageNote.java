@@ -85,6 +85,10 @@ public class HomePageNote {
         return editNoteSubmitButton;
     }
 
+    public WebElement getAddNoteButton() {
+        return addNoteButton;
+    }
+
     public void editNote(String title, String description) {
         editNoteTitleField.sendKeys(title);
         editNoteDescriptionField.sendKeys(description);
@@ -95,4 +99,5 @@ public class HomePageNote {
         editNoteTitleField.clear();
         editNoteDescriptionField.clear();
     }
+
 }

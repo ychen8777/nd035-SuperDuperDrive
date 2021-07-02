@@ -70,6 +70,9 @@ public class NoteTests {
         WebElement noteTab = this.homePageNote.getNotesTab();
         this.homePageNote.gotoNoteTab();
         Assertions.assertTrue(Boolean.parseBoolean(noteTab.getAttribute("aria-selected")), "Note tab is not active.");
+
+//        WebElement noteModal = this.homePageNote.getNoteModal();
+//        System.out.println("modal closed aria-hidden: " + noteModal.getAttribute("aria-hidden"));
     }
 
     @Test
@@ -84,20 +87,31 @@ public class NoteTests {
         this.homePageNote = new HomePageNote(driver);
         this.homePageNote.openNoteModal();
         WebElement noteModal = this.homePageNote.getNoteModal();
-        Assertions.assertTrue(Boolean.parseBoolean(noteModal.getAttribute("aria-hidden")), "Add note modal is not showing.");
+
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(this.homePageNote.getNoteSubmitButton()));
+
+        //System.out.println("modal open aria-hidden: " + noteModal.getAttribute("aria-hidden"));
+        Assertions.assertFalse(Boolean.parseBoolean(noteModal.getAttribute("aria-hidden")), "Add note modal is not showing.");
+
      }
 
     @Test
     @Order(4)
-    public void closeNoteModal() {
+    public void closeNoteModal() throws InterruptedException {
         //noteModal.closeModal();
         //WebElement saveNoteButton = driver.findElement(By.id("noteSubmit"));
         //Assertions.assertNull(saveNoteButton, "Note modal not closed properly");
 
         this.homePageNote = new HomePageNote(driver);
         this.homePageNote.closeModal();
+
+        Thread.sleep(1000);
+
         WebElement noteModal = this.homePageNote.getNoteModal();
-        Assertions.assertFalse(Boolean.parseBoolean(noteModal.getAttribute("aria-hidden")), "Add note modal failed to close.");
+        //System.out.println("modal closed aria-hidden: " + noteModal.getAttribute("aria-hidden"));
+        Assertions.assertTrue(Boolean.parseBoolean(noteModal.getAttribute("aria-hidden")), "Add note modal failed to close.");
+
     }
 
     @Test
