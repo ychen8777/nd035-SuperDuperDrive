@@ -23,6 +23,16 @@ public class HomePageCredential {
     @FindBy(id = "credentialSaveButton")
     private WebElement credentialSaveButton;
 
+    @FindBy(id = "credential-url")
+    private WebElement credentialUrlField;
+
+    @FindBy(id = "credential-username")
+    private WebElement credentialUsernameField;
+
+    @FindBy(id = "credential-password")
+    private WebElement credentialPasswordField;
+
+
     public HomePageCredential(WebDriver driver){
         PageFactory.initElements(driver, this);
     }
@@ -40,6 +50,12 @@ public class HomePageCredential {
         closeButton.click();
     }
 
+    public void addCredential(String url, String username, String password) {
+        credentialUrlField.sendKeys(url);
+        credentialUsernameField.sendKeys(username);
+        credentialPasswordField.sendKeys(password);
+    }
+
     public WebElement getCredentialsTab() {
         return credentialsTab;
     }
@@ -51,4 +67,6 @@ public class HomePageCredential {
     public WebElement getCredentialSaveButton() {
         return credentialSaveButton;
     }
+
+
 }
