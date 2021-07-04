@@ -2,6 +2,7 @@ package com.udacity.jwdnd.course1.cloudstorage;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.util.Assert;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -89,6 +91,43 @@ public class CredentialTests {
 
         WebElement credentialModal = this.homePageCredential.getCredentialModal();
         Assertions.assertTrue(Boolean.parseBoolean(credentialModal.getAttribute("aria-hidden")), "Credential modal is not closed.");
+    }
+
+    @Test
+    @Order(5)
+    public void addCredential() throws InterruptedException {
+        this.homePageCredential = new HomePageCredential(driver);
+        this.homePageCredential.openCredentialModal();
+
+        String url = "www.seleniumtest.io";
+        String username = "test1";
+        String password = "testtest";
+
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(this.homePageCredential.getCredentialSaveButton()));
+
+        this.homePageCredential.addCredential(url, username, password);
+        Thread.sleep(800);
+
+        this.homePageCredential.getCredentialSaveButton().click();
+
+        // land to result page
+        String actualUrl = driver.getCurrentUrl();
+        String resultUrl = "http://localhost:" + port + "/result/success";
+        Assertions.assertEquals(actualUrl, resultUrl);
+
+        // return to home page
+        driver.get("http://localhost:" + port + "/home");
+        this.homePageCredential.getCredentialsTab();
+
+        String actualCredentialUrl = driver.findElement(By.xpath("//*[@id=\"credentialTable\"]/tbody/tr/th")).getAttribute("innerHTML");
+        String actualUsername = driver.findElement(By.xpath("//*[@id=\"credentialTable\"]/tbody/tr/td[2]")).getAttribute("innerHTML");
+        String actualPassword = driver.findElement(By.xpath("//*[@id=\"credentialTable\"]/tbody/tr/td[3]")).getAttribute("innerHTML");
+
+        Assertions.assertEquals(url, actualCredentialUrl);
+        Assertions.assertEquals(username, actualUsername);
+        Assertions.assertNotEquals(password, actualPassword);   // displayed password should be encrypted
+
     }
 
 }
