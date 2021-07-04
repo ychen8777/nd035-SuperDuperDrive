@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.util.Assert;
 
+import java.util.List;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CredentialTests {
@@ -118,7 +120,7 @@ public class CredentialTests {
 
         // return to home page
         driver.get("http://localhost:" + port + "/home");
-        this.homePageCredential.getCredentialsTab();
+        this.homePageCredential.clickCredentialTab();
 
         String actualCredentialUrl = driver.findElement(By.xpath("//*[@id=\"credentialTable\"]/tbody/tr/th")).getAttribute("innerHTML");
         String actualUsername = driver.findElement(By.xpath("//*[@id=\"credentialTable\"]/tbody/tr/td[2]")).getAttribute("innerHTML");
@@ -127,6 +129,36 @@ public class CredentialTests {
         Assertions.assertEquals(url, actualCredentialUrl);
         Assertions.assertEquals(username, actualUsername);
         Assertions.assertNotEquals(password, actualPassword);   // displayed password should be encrypted
+
+    }
+
+    @Test
+    @Order(6)
+    public void deleteCredential() {
+        // return to home page
+        driver.get("http://localhost:" + port + "/home");
+        this.homePageCredential = new HomePageCredential(driver);
+        this.homePageCredential.clickCredentialTab();
+
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        //WebElement submitButton = wait.until(webDriver -> webDriver.findElement(By.id("noteSaveButton")));
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[@id=\"credentialTable\"]/tbody/tr/td[1]/a"))));
+
+        WebElement deleteButton = driver.findElement(By.xpath("//*[@id=\"credentialTable\"]/tbody/tr/td[1]/a"));
+        deleteButton.click();
+
+        // land to result page
+        String actualUrl = driver.getCurrentUrl();
+        String resultUrl = "http://localhost:" + port + "/result/success";
+        Assertions.assertEquals(actualUrl, resultUrl);
+
+        // return to home page
+        driver.get("http://localhost:" + port + "/home");
+        this.homePageCredential.getCredentialsTab();
+
+        // Check the table is empty
+        List<WebElement> tableRow = driver.findElements(By.xpath("//*[@id='credentialTable']/tbody/tr"));
+        Assertions.assertEquals(0, tableRow.size());
 
     }
 
