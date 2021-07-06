@@ -3,7 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage.model;
 
 import java.sql.Blob;
 
-public class File {
+public class UserFile {
     private Integer fileId;
     private String filename;
     private String contenttype;
@@ -11,7 +11,7 @@ public class File {
     private Integer userid;
     private Blob filedata;
 
-    public File(Integer fileId, String filename, String contenttype, String filesize, Integer userid, Blob filedata) {
+    public UserFile(Integer fileId, String filename, String contenttype, String filesize, Integer userid, Blob filedata) {
         this.fileId = fileId;
         this.filename = filename;
         this.contenttype = contenttype;
