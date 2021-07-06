@@ -32,6 +32,22 @@ public class HomePageCredential {
     @FindBy(id = "credential-password")
     private WebElement credentialPasswordField;
 
+    @FindBy(id = "editCredentialModal")
+    private WebElement editCredentialModal;
+
+    @FindBy( id = "edit-credential-url")
+    private WebElement editCredentialUrlField;
+
+    @FindBy( id = "edit-credential-username")
+    private WebElement editCredentialUsernameField;
+
+    @FindBy (id = "edit-credential-password")
+    private WebElement editCredentialPasswordField;
+
+    @FindBy (id = "credentialEditButton")
+    private WebElement editCredentialSaveButton;
+
+
 
     public HomePageCredential(WebDriver driver){
         PageFactory.initElements(driver, this);
@@ -56,6 +72,12 @@ public class HomePageCredential {
         credentialPasswordField.sendKeys(password);
     }
 
+    public void updateCredential(String url, String username, String password) {
+        editCredentialUrlField.sendKeys(url);
+        editCredentialUsernameField.sendKeys(username);
+        editCredentialPasswordField.sendKeys(password);
+    }
+
     public WebElement getCredentialsTab() {
         return credentialsTab;
     }
@@ -68,5 +90,23 @@ public class HomePageCredential {
         return credentialSaveButton;
     }
 
+    public WebElement getEditCredentialModal() {
+        return editCredentialModal;
+    }
 
+    public WebElement getEditCredentialUrlField() {
+        return editCredentialUrlField;
+    }
+
+    public WebElement getEditCredentialUsernameField() {
+        return editCredentialUsernameField;
+    }
+
+    public WebElement getEditCredentialPasswordField() {
+        return editCredentialPasswordField;
+    }
+
+    public WebElement getEditCredentialSaveButton() {
+        return editCredentialSaveButton;
+    }
 }
