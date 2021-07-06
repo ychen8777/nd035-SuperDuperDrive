@@ -72,6 +72,12 @@ public class HomePageCredential {
         credentialPasswordField.sendKeys(password);
     }
 
+    public void clearEditModalFields() {
+        editCredentialUrlField.clear();
+        editCredentialUsernameField.clear();
+        editCredentialPasswordField.clear();
+    }
+
     public void updateCredential(String url, String username, String password) {
         editCredentialUrlField.sendKeys(url);
         editCredentialUsernameField.sendKeys(username);
