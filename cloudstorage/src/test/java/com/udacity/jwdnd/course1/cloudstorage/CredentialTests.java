@@ -159,9 +159,43 @@ public class CredentialTests {
 
     }
 
-
     @Test
     @Order(7)
+    public void editCredential() throws InterruptedException {
+
+        this.homePageCredential = new HomePageCredential(driver);
+
+        this.homePageCredential.clearEditModalFields();
+        String newUrl = "www.newUrl.test";
+        String newUsername = "newUsername";
+        String newPassword = "newPassword";
+
+        this.homePageCredential.updateCredential(newUrl, newUsername, newPassword);
+        Thread.sleep(600);
+        this.homePageCredential.getEditCredentialSaveButton().click();
+
+        // land to result page
+        String actualUrl = driver.getCurrentUrl();
+        String resultUrl = "http://localhost:" + port + "/result/success";
+        Assertions.assertEquals(actualUrl, resultUrl);
+
+        // return to home page
+        driver.get("http://localhost:" + port + "/home");
+        this.homePageCredential.clickCredentialTab();
+
+        String actualCredentialUrl = driver.findElement(By.xpath("//*[@id=\"credentialTable\"]/tbody/tr/th")).getAttribute("innerHTML");
+        String actualUsername = driver.findElement(By.xpath("//*[@id=\"credentialTable\"]/tbody/tr/td[2]")).getAttribute("innerHTML");
+        String actualPassword = driver.findElement(By.xpath("//*[@id=\"credentialTable\"]/tbody/tr/td[3]")).getAttribute("innerHTML");
+
+        Assertions.assertEquals(newUrl, actualCredentialUrl);
+        Assertions.assertEquals(newUsername, actualUsername);
+        Assertions.assertNotEquals(newPassword, actualPassword);   // displayed password should be encrypte
+
+    }
+
+
+    @Test
+    @Order(8)
     public void deleteCredential() {
         // return to home page
         driver.get("http://localhost:" + port + "/home");
