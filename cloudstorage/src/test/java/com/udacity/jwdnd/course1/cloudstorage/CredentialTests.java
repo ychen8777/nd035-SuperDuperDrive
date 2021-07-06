@@ -134,6 +134,34 @@ public class CredentialTests {
 
     @Test
     @Order(6)
+    public void viewCredential() throws InterruptedException {
+        this.homePageCredential = new HomePageCredential(driver);
+
+        String url = "www.seleniumtest.io";
+        String username = "test1";
+        String password = "testtest";
+
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[@id=\"credentialTable\"]/tbody/tr/td[1]/a"))));
+
+        WebElement viewButton = driver.findElement(By.xpath("//*[@id='credentialTable']/tbody/tr/td[1]/button"));
+        viewButton.click();
+
+        Thread.sleep(800);
+
+        WebElement urlField = this.homePageCredential.getEditCredentialUrlField();
+        WebElement usernameField = this.homePageCredential.getEditCredentialUsernameField();
+        WebElement passwordField = this.homePageCredential.getEditCredentialPasswordField();
+
+        Assertions.assertEquals(url, urlField.getAttribute("value"));
+        Assertions.assertEquals(username, usernameField.getAttribute("value"));
+        Assertions.assertEquals(password, passwordField.getAttribute("value"));
+
+    }
+
+
+    @Test
+    @Order(7)
     public void deleteCredential() {
         // return to home page
         driver.get("http://localhost:" + port + "/home");
@@ -141,7 +169,6 @@ public class CredentialTests {
         this.homePageCredential.clickCredentialTab();
 
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        //WebElement submitButton = wait.until(webDriver -> webDriver.findElement(By.id("noteSaveButton")));
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[@id=\"credentialTable\"]/tbody/tr/td[1]/a"))));
 
         WebElement deleteButton = driver.findElement(By.xpath("//*[@id=\"credentialTable\"]/tbody/tr/td[1]/a"));
