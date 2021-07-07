@@ -17,6 +17,10 @@ public class FileService {
     public FileService(FileMapper fileMapper) {
         this.fileMapper = fileMapper;
     }
-    
+
+    public int uploadFile(String filename, String contenttype, String filesize, Integer userid, byte[] filedata) {
+        UserFile newFile = new UserFile(null, filename, contenttype, filesize, userid, filedata);
+        return fileMapper.insertFile(newFile);
+    }
 
 }
