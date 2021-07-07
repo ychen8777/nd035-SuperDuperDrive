@@ -48,7 +48,24 @@ public class HomeController {
 
         return "home";
     }
-    
+
+    // File
+    @PostMapping(value = "/files/add")
+    public String addFile(@RequestParam("fileUpload") MultipartFile file) {
+        try {
+            String filename = file.getOriginalFilename();
+            String contenttype = file.getContentType();
+            String filesize = Long.toString(file.getSize());
+            byte[] filedata = file.getBytes();
+
+            fileService.uploadFile(filename, contenttype, filesize, getUserid(),filedata);
+
+            return "redirect:/result/success";
+        } catch(Exception e ) {
+            System.out.println(e);
+            return "redirect:/result/error";
+        }
+    }
 
     // Note
     @PostMapping(value = "/notes/add")
