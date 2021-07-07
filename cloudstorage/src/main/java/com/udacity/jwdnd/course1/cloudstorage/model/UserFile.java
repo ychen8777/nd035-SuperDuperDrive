@@ -9,9 +9,9 @@ public class UserFile {
     private String contenttype;
     private String filesize;
     private Integer userid;
-    private Blob filedata;
+    private byte[] filedata;
 
-    public UserFile(Integer fileId, String filename, String contenttype, String filesize, Integer userid, Blob filedata) {
+    public UserFile(Integer fileId, String filename, String contenttype, String filesize, Integer userid, byte[] filedata) {
         this.fileId = fileId;
         this.filename = filename;
         this.contenttype = contenttype;
@@ -60,11 +60,11 @@ public class UserFile {
         this.userid = userid;
     }
 
-    public Blob getFiledata() {
+    public byte[] getFiledata() {
         return filedata;
     }
 
-    public void setFiledata(Blob filedata) {
+    public void setFiledata(byte[] filedata) {
         this.filedata = filedata;
     }
 }
