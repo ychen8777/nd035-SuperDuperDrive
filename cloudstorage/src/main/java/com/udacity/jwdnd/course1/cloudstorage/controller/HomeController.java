@@ -4,6 +4,7 @@ import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.service.CredentialService;
+import com.udacity.jwdnd.course1.cloudstorage.service.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.service.NoteService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,20 +12,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 
 @Controller
 public class HomeController {
 
+    private FileService fileService;
     private NoteService noteService;
     //private User user;
     private CredentialService credentialService;
 
-    public HomeController(NoteService noteService, CredentialService credentialService) {
+    public HomeController(FileService fileService,NoteService noteService, CredentialService credentialService) {
 
+        this.fileService = fileService;
         this.noteService = noteService;
         this.credentialService = credentialService;
+
     }
 
     @GetMapping("/home")
@@ -43,6 +48,7 @@ public class HomeController {
 
         return "home";
     }
+    
 
     // Note
     @PostMapping(value = "/notes/add")
