@@ -19,17 +19,17 @@ public interface FileMapper {
     }
      */
 
-    @Insert("INSERT INTO FILES (fileID, filename, contenttype, filesize, userid, filedata) " +
-            "VALUES (#{fileID}, #{filename}, #{contenttype}, #{filesize}, #{userid}, #{filedata})")
-    @Options(useGeneratedKeys = true, keyProperty = "fileID")
+    @Insert("INSERT INTO FILES (fileId, filename, contenttype, filesize, userid, filedata) " +
+            "VALUES (#{fileId}, #{filename}, #{contenttype}, #{filesize}, #{userid}, #{filedata})")
+    @Options(useGeneratedKeys = true, keyProperty = "fileId")
     int insertFile(UserFile file);
 
-    @Select("SELECT * FROM FILES WHERE fileID = #{fileID}")
-    UserFile getFile(Integer fileID);
+    @Select("SELECT * FROM FILES WHERE fileId = #{fileId}")
+    UserFile getFile(Integer fileId);
 
     @Select("SELECT * FROM FILES WHERE userid = #{userid}")
     List<UserFile> getFileList(Integer userid);
 
-    @Delete("DELETE FROM FILES WHERE fileID = #{fileID}")
-    int deleteFile(Integer fileID);
+    @Delete("DELETE FROM FILES WHERE fileId = #{fileId}")
+    int deleteFile(Integer fileId);
 }
