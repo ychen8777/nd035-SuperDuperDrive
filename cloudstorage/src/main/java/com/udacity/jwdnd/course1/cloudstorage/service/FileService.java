@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 
 @Service
 public class FileService {
@@ -22,5 +23,12 @@ public class FileService {
         UserFile newFile = new UserFile(null, filename, contenttype, filesize, userid, filedata);
         return fileMapper.insertFile(newFile);
     }
+
+    public boolean fileExist(Integer userid, String filename) {
+        ArrayList<String> fileNameList = (ArrayList<String>) fileMapper.getFileNames(userid);
+        return fileNameList.contains(filename);
+    }
+
+
 
 }
