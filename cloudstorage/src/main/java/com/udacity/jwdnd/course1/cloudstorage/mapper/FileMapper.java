@@ -30,6 +30,9 @@ public interface FileMapper {
     @Select("SELECT * FROM FILES WHERE userid = #{userid}")
     List<UserFile> getFileList(Integer userid);
 
+    @Select("SELECT filename FROM FILES WHERE userid = #{userid}")
+    List<String> getFileNames(Integer userid);
+
     @Delete("DELETE FROM FILES WHERE fileId = #{fileId}")
     int deleteFile(Integer fileId);
 }
