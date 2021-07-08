@@ -58,6 +58,10 @@ public class HomeController {
             String filesize = Long.toString(file.getSize());
             byte[] filedata = file.getBytes();
 
+            if (fileService.fileExist(this.getUserid(), filename)) {
+                return "redirect:/result/filenameError";
+            }
+
             fileService.uploadFile(filename, contenttype, filesize, getUserid(),filedata);
 
             return "redirect:/result/success";
