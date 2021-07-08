@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 
@@ -58,7 +59,7 @@ public class HomeController {
 
     // File
     @PostMapping(value = "/files/add")
-    public String addFile(@RequestParam("fileUpload") MultipartFile file) {
+    public String addFile(@RequestParam("fileUpload") MultipartFile file, RedirectAttributes attributes) {
         try {
             String filename = file.getOriginalFilename();
             String contenttype = file.getContentType();
@@ -66,7 +67,8 @@ public class HomeController {
             byte[] filedata = file.getBytes();
 
             if (fileService.fileExist(this.getUserid(), filename)) {
-                return "redirect:/result/filenameError";
+                attributes.addFlashAttribute("filenameErrorMessage", filename);
+                return "redirect:/home";
             }
 
             fileService.uploadFile(filename, contenttype, filesize, getUserid(),filedata);

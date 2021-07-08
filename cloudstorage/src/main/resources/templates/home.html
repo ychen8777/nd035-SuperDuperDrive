@@ -40,6 +40,10 @@
                                 </div>
                             </div>
                         </form>
+                        <div class="alert alert-danger" th:if="${filenameErrorMessage ne null}"  id="filename-error">
+                            <p>A file with the same name <b th:text="${filenameErrorMessage}"></b> already exists on the drive.</p>
+                            <p>Please delete the existing file on the drive if you want to upload a newer version.</p>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-striped" id="fileTable">
                                 <thead>

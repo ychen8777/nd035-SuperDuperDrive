@@ -30,10 +30,4 @@ public class ResultController {
         return "result";
     }
 
-    @GetMapping("/result/filenameError")
-    public String filenameErrorResult(Model model){
-        String status = "filenameError";
-        model.addAttribute("status", status);
-        return "result";
-    }
 }
