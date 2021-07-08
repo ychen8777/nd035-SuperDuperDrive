@@ -3,6 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
+import com.udacity.jwdnd.course1.cloudstorage.model.UserFile;
 import com.udacity.jwdnd.course1.cloudstorage.service.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.service.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.service.NoteService;
@@ -33,17 +34,23 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String gotoHome(@ModelAttribute("note") Note note, @ModelAttribute("credential") Credential credential, Model model){
+    public String gotoHome(@ModelAttribute("file") UserFile file, @ModelAttribute("note") Note note, @ModelAttribute("credential") Credential credential, Model model){
         //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         //User user = (User) auth.getPrincipal();
         //System.out.println("userid: " + user.getUserid());
 
+        Integer userid = getUserid();
+
+        // list files
+        ArrayList<UserFile> fileList = (ArrayList<UserFile>) fileService.getFileList(userid);
+        model.addAttribute("fileList", fileList);
+
         // list notes
-        ArrayList<Note> noteList = (ArrayList<Note>) noteService.getNoteList(getUserid());
+        ArrayList<Note> noteList = (ArrayList<Note>) noteService.getNoteList(userid);
         model.addAttribute("noteList", noteList);
 
         // list credentials
-        ArrayList<Credential> credentialList = (ArrayList<Credential>) credentialService.getCredentialList(getUserid());
+        ArrayList<Credential> credentialList = (ArrayList<Credential>) credentialService.getCredentialList(userid);
         model.addAttribute("credentials", credentialList);
 
         return "home";
