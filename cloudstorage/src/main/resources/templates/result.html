@@ -23,6 +23,12 @@
                 <span>An error has occurred for your action. Please try again later.</span>
                 <p>Click <a th:href="@{/home}" >here</a> to continue.</p>
             </div>
+            <div th:if="${status == 'filenameError'}" class="alert alert-danger fill-parent">
+                <h1 class="display-5">Filename Error</h1>
+                <span>A file with the same name already exists on the drive.</span>
+                <span>Please delete the existing file on the drive if you want to upload a newer version.</span>
+                <p>Click <a th:href="@{/home}" >here</a> to continue.</p>
+            </div>
         </div>
     </body>
 </html>
