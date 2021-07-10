@@ -35,6 +35,10 @@ public class FileService {
         return fileList;
     }
 
+    public UserFile getFile(Integer fileId) {
+        return fileMapper.getFile(fileId);
+    }
+
 
 
 }
