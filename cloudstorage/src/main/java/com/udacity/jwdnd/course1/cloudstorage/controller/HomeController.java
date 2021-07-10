@@ -106,6 +106,20 @@ public class HomeController {
 
     }
 
+    @GetMapping( value = "/files/delete/{id}")
+    public String deleteFile(@PathVariable("id") Integer fileId) {
+        try {
+            fileService.deleteFile(fileId);
+            return "redirect:/result/success";
+        }
+        catch(Exception e) {
+            return "redirect:/result/error";
+        }
+    }
+
+
+
+
     // Note
     @PostMapping(value = "/notes/add")
     public String addNote(@ModelAttribute("note") Note note, Model model){
