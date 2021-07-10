@@ -7,6 +7,11 @@ import com.udacity.jwdnd.course1.cloudstorage.model.UserFile;
 import com.udacity.jwdnd.course1.cloudstorage.service.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.service.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.service.NoteService;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 @Controller
@@ -78,6 +85,25 @@ public class HomeController {
             System.out.println(e);
             return "redirect:/result/error";
         }
+    }
+
+    @GetMapping(value = "/files/download/{id}")
+    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") Integer fileId) {
+        UserFile file = fileService.getFile(fileId);
+
+        String filename = file.getFilename();
+        String contenttype = file.getContenttype();
+        byte[] filedata = file.getFiledata();
+
+        InputStream inputStream = new ByteArrayInputStream(filedata);
+        InputStreamResource inputResource = new InputStreamResource(inputStream);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.parseMediaType(contenttype).toString());
+        httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename);
+
+        return ResponseEntity.ok().headers(httpHeaders).body(inputResource);
+
     }
 
     // Note
