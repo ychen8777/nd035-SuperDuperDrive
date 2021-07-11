@@ -57,6 +57,13 @@ public class CredentialService {
         return credentialMapper.deleteCredential(credentialid);
     }
 
+    public boolean isOwner(Integer credentialid, Integer userid) {
+        Integer trueOwner = Integer.valueOf(credentialMapper.getOwner(credentialid));
+        return userid.equals(trueOwner);
+    }
 
+    public Credential getCredential(Integer credentialid) {
+        return credentialMapper.getCredential(credentialid);
+    }
 
 }

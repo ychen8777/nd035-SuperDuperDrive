@@ -138,9 +138,6 @@ public class HomeController {
         }
     }
 
-
-
-
     // Note
     @PostMapping(value = "/notes/add")
     public String addNote(@ModelAttribute("note") Note note, Model model){
@@ -210,7 +207,18 @@ public class HomeController {
     }
 
     @GetMapping(value = "/credentials/delete/{id}")
-    public String deleteCredential(@PathVariable("id") Integer credentialid, @ModelAttribute("credential") Credential credential, Model model) {
+    public String deleteCredential(@PathVariable("id") Integer credentialid) {
+
+        Credential credential = credentialService.getCredential(credentialid);
+
+        if (credential == null) {
+            return "redirect:/home";
+        }
+
+        if (!credentialService.isOwner(credentialid, getUserid())){
+            return "redirect:/home";
+        }
+
         try{
             credentialService.deleteCredential(credentialid);
             return "redirect:/result/success";
