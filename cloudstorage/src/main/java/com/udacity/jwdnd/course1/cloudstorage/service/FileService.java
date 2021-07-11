@@ -43,6 +43,10 @@ public class FileService {
         return fileMapper.deleteFile(fileId);
     }
 
+    public boolean isOwner(Integer fileId, Integer userid){
+        String trueOwner = fileMapper.getOwner(fileId);
+        return trueOwner.equals(userid);
+    }
 
 
 }

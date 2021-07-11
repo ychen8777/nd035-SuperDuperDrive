@@ -89,6 +89,10 @@ public class HomeController {
 
     @GetMapping(value = "/files/download/{id}")
     public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") Integer fileId) {
+        if (!fileService.isOwner(fileId, getUserid())) {
+            return null;
+        }
+
         UserFile file = fileService.getFile(fileId);
 
         String filename = file.getFilename();
@@ -108,6 +112,10 @@ public class HomeController {
 
     @GetMapping( value = "/files/delete/{id}")
     public String deleteFile(@PathVariable("id") Integer fileId) {
+        if (!fileService.isOwner(fileId, getUserid())) {
+            return null;
+        }
+
         try {
             fileService.deleteFile(fileId);
             return "redirect:/result/success";

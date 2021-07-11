@@ -27,6 +27,9 @@ public interface FileMapper {
     @Select("SELECT * FROM FILES WHERE fileId = #{fileId}")
     UserFile getFile(Integer fileId);
 
+    @Select("SELECT userid FROM FILES WHERE fileId = #{fileId}")
+    String getOwner(Integer fileId);
+
     @Select("SELECT * FROM FILES WHERE userid = #{userid}")
     List<UserFile> getFileList(Integer userid);
 
