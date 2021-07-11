@@ -39,11 +39,10 @@ public class NoteService {
         return noteMapper.deleteNote(noteid);
     }
 
-
-
-
-
-
+    public boolean isOwner(Integer noteid, Integer userid) {
+        Integer trueOwner = noteMapper.getOwner(noteid);
+        return userid.equals(trueOwner);
+    }
 
 
 }

@@ -172,7 +172,18 @@ public class HomeController {
     }
 
     @GetMapping(value = "/notes/delete/{id}")
-    public String deleteNote(@PathVariable("id") Integer noteid, @ModelAttribute("note") Note note, Model model) {
+    public String deleteNote(@PathVariable("id") Integer noteid) {
+
+        Note note = noteService.getNote(noteid);
+
+        if (note == null) {
+            return "redirect:/home";
+        }
+
+        if (!noteService.isOwner(noteid, getUserid())) {
+            return "redirect:/home";
+        }
+
         try {
             noteService.deleteNote(noteid);
             return "redirect:/result/success";
