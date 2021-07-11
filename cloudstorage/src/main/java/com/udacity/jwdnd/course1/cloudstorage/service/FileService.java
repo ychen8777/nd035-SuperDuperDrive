@@ -44,8 +44,10 @@ public class FileService {
     }
 
     public boolean isOwner(Integer fileId, Integer userid){
-        String trueOwner = fileMapper.getOwner(fileId);
-        return trueOwner.equals(userid);
+        Integer trueOwner = Integer.valueOf(fileMapper.getOwner(fileId));
+        //System.out.println("trueOwner" + trueOwner + "userid" + userid);
+        //System.out.println(userid.equals(trueOwner));
+        return userid.equals(trueOwner);
     }
 
 

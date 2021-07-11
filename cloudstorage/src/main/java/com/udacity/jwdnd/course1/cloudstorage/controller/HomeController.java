@@ -8,10 +8,7 @@ import com.udacity.jwdnd.course1.cloudstorage.service.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.service.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.service.NoteService;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -89,11 +86,20 @@ public class HomeController {
 
     @GetMapping(value = "/files/download/{id}")
     public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") Integer fileId) {
-        if (!fileService.isOwner(fileId, getUserid())) {
-            return null;
-        }
 
         UserFile file = fileService.getFile(fileId);
+
+        // check if file exists
+        if (file == null) {
+            //System.out.println("file error");
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+
+        // check if user is the owner
+        if (!fileService.isOwner(fileId, getUserid())) {
+            //System.out.println("user error");
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
 
         String filename = file.getFilename();
         String contenttype = file.getContenttype();
@@ -112,8 +118,15 @@ public class HomeController {
 
     @GetMapping( value = "/files/delete/{id}")
     public String deleteFile(@PathVariable("id") Integer fileId) {
+
+        UserFile file = fileService.getFile(fileId);
+
+        if (file == null) {
+            return "redirect:/home";
+        }
+
         if (!fileService.isOwner(fileId, getUserid())) {
-            return null;
+            return "redirect:/home";
         }
 
         try {
