@@ -55,6 +55,7 @@ The home page should have a logout button that allows the user to logout of the 
 ### Testing
 
 1. Write tests for user signup, login, and unauthorized access restrictions.
+![AccessTests](/demoGif/AccessTests.gif)
 
 
 2. Write tests for note creation, viewing, editing, and deletion.
