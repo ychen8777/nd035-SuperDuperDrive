@@ -59,7 +59,7 @@ The home page should have a logout button that allows the user to logout of the 
 
 
 2. Write tests for note creation, viewing, editing, and deletion.
-
+![NoteTests](/demoGif/NoteTests.gif)
 
 3. Write tests for credential creation, viewing, editing, and deletion.
 
