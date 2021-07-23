@@ -23,6 +23,7 @@ The back-end is about security and connecting the front-end to database data and
 
 3. Making calls to the database with MyBatis mappers
  - implement MyBatis mapper interfaces for each of the model types per database table to support the basic CRUD (Create, Read, Update, Delete) operations 
+
 ![H2Console](/demoGif/H2Console.gif)
 
 
@@ -43,6 +44,8 @@ The back-end is about security and connecting the front-end to database data and
   - The user should be able to upload files and see any files they previously uploaded. 
   - The user should be able to download or delete previously-uploaded files.
   - Any errors related to file actions should be displayed. For example, a user should not be able to upload two files with the same name
+
+![FileDemo](/demoGif/FileDemo.gif)
 
  ii. Notes
   - The user should be able to create notes and see a list of the notes they have previously created.
