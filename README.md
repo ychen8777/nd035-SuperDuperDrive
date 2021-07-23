@@ -23,6 +23,8 @@ The back-end is about security and connecting the front-end to database data and
 
 3. Making calls to the database with MyBatis mappers
  - implement MyBatis mapper interfaces for each of the model types per database table to support the basic CRUD (Create, Read, Update, Delete) operations 
+![H2Console](/demoGif/H2Console.gif)
+
 
 ### The Front-End
 
